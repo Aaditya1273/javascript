@@ -66,7 +66,7 @@ export function APIKeysTableView({
   return (
     <>
       <div {...mergeStyleProps(themeProps('api-keys-table'), stylex.props(styles.root))}>
-        <VisuallyHidden role='status'>{m.loaded}</VisuallyHidden>
+        <VisuallyHidden role='status'>{isError ? m.loadError : m.loaded}</VisuallyHidden>
         <Table.Toolbar>
           <Table.Search
             ref={searchInputRef}

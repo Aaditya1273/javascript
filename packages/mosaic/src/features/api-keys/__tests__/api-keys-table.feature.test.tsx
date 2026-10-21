@@ -173,6 +173,7 @@ describe('APIKeysTable', () => {
       expect(await screen.findByRole('status')).toHaveTextContent('Loading API keys');
       expect(within(table()).getByRole('columnheader', { name: 'Name' })).toBeVisible();
       expect(within(table()).getAllByRole('row')).toHaveLength(1);
+      expect(within(table()).getAllByRole('row', { hidden: true })).toHaveLength(4);
       expect(within(table()).queryByRole('button')).toBeNull();
       expect(screen.getByRole('searchbox', { name: 'Search API keys' })).toBeDisabled();
       expect(screen.getByRole('button', { name: 'Create API key' })).toBeDisabled();
@@ -278,7 +279,10 @@ describe('APIKeysTable', () => {
       await renderWithClerk(<APIKeysTable subject={alice.id} />);
       const user = userEvent.setup();
 
-      expect(await screen.findByText('Could not load API keys', undefined, { timeout: 15_000 })).toBeVisible();
+      await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('Could not load API keys'), {
+        timeout: 15_000,
+      });
+      expect(within(table()).getByText('Could not load API keys')).toBeVisible();
       expect(screen.queryByText('No API Keys created')).toBeNull();
 
       failing = false;
