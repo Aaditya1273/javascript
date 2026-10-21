@@ -76,7 +76,7 @@ export function MembersTableTabView({
   return (
     <>
       <div {...mergeStyleProps(themeProps('members-table-tab'), stylex.props(tableTabStyles.root))}>
-        <VisuallyHidden role='status'>{m.loaded}</VisuallyHidden>
+        {isError ? null : <VisuallyHidden role='status'>{m.loaded}</VisuallyHidden>}
         <Table.Toolbar>
           <Table.Search
             ref={searchInputRef}
